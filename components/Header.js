@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
-import LoginButton from '../components/LoginButton';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase/firebase';
-import LogOutButton from '../components/LogOutButton';
+import { AwesomeButton } from 'react-awesome-button';
+import { signOut } from 'firebase/auth';
 const Header = () => {
   //! User
   const [user, userLoading, userError] = useAuthState(auth);
@@ -32,8 +32,10 @@ const Header = () => {
     },
   ];
   return (
-    <div className=" flex h-[5rem] w-full items-center justify-between px-20 glassorism">
-      <div className="italic text-indigo-500 font-semibold tracking-wider  text-2xl">AzEducation</div>
+    <div className=" glassorism flex h-[5rem] w-full items-center justify-between px-20">
+      <div className="text-2xl font-semibold italic tracking-wider  text-indigo-500">
+        AzEducation
+      </div>
       <ul className="flex items-center gap-x-6">
         {menu &&
           menu.map((item, key) => (
@@ -49,7 +51,27 @@ const Header = () => {
               </a>
             </Link>
           ))}
-        {user ? <LogOutButton /> : <LoginButton />}
+        {user ? (
+          <AwesomeButton
+            type="primary"
+            size={'medium'}
+            action={() => {
+              signOut(auth);
+            }}
+          >
+            Çıxış Et
+          </AwesomeButton>
+        ) : (
+          <AwesomeButton
+            type="primary"
+            size={'medium'}
+            action={() => {
+              router.push('/login');
+            }}
+          >
+            Daxil Ol
+          </AwesomeButton>
+        )}
       </ul>
     </div>
   );

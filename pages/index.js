@@ -5,10 +5,16 @@ import Lottie from 'react-lottie';
 import Typewriter from 'typewriter-effect';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase/firebase';
-import ContactPopUp from '../components/ContactPopUp';
+import {
+  AwesomeButton,
+  AwesomeButtonProgress,
+  AwesomeButtonSocial,
+} from 'react-awesome-button';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 const Index = () => {
+  // user girmesini denegler
   const [user, userLoading, userError] = useAuthState(auth);
-  const [modal, setModal] = useState(false);
   const educationAnimationOptions = {
     loop: true,
     autoplay: true,
@@ -16,6 +22,13 @@ const Index = () => {
     rendererSettings: {
       preserveAspectRatio: 'xMidYMid slice',
     },
+  };
+  const authAdmin = () => {
+    if (user?.email === 'admin@gmail.com') {
+      return true;
+    } else {
+      return false;
+    }
   };
   return (
     <div className="flex h-[calc(100vh-5rem)] px-20 ">
@@ -45,9 +58,15 @@ const Index = () => {
             }}
           />
         </p>
-        <button className="glassorism h-12 w-44 transition-all hover:bg-sky-500/80 hover:text-white">
-          Əlaqə
-        </button>
+        {authAdmin() ? (
+          <AwesomeButton type="primary" size={'medium'} ripple={true}>
+            <Link href={'/admin'}>admin</Link>
+          </AwesomeButton>
+        ) : (
+          <AwesomeButton type="primary" size={'medium'} ripple={true}>
+            Əlaqə
+          </AwesomeButton>
+        )}
       </div>
       <div className="h-full w-1/2">
         <Lottie

@@ -4,7 +4,10 @@ import { MainContextProvider } from '../helpers/MainContext';
 import Header from '../components/Header';
 import { Router, useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import Footer from '../components/Footer'
+import Footer from '../components/Footer';
+import 'react-awesome-button/dist/themes/theme-blue.css';
+
+
 function MyApp({ Component, pageProps }: AppProps) {
   const rotuer = useRouter();
   const [showHeader, setShowHeader] = useState(false);
@@ -21,7 +24,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <MainContextProvider>
       {showHeader ? <Header /> : null}
       <Component {...pageProps} />
-      <Footer/>
+      <Footer />
     </MainContextProvider>
   );
 }
