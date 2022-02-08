@@ -28,40 +28,50 @@ const AddTest = () => {
       }
     }
   }, [user]);
-
-  // ! Test data
-
-  const [testName, setTestName] = useState('');
+  const [error, setError] = useState(false);
+  const [testTitle, setTestTitle] = useState();
   const [testUrl, setTestUrl] = useState('');
-  const [testClass, setTestClass] = useState();
-  const [testAuthor, setTestAuthor] = useState();
-  const [testCategory, setTestCategory] = useState();
-  const uniqeTestId = Math.random().toString(16).slice(2);
-
-  const docRef = doc(db, 'exams', uniqeTestId);
-  //! Set Test
-
-  const handleSetTest = async (e) => {
-    e.preventDefault();
-    await setDoc(docRef, {
-      auth: testAuthor,
-      category: testCategory,
-      class: testClass,
-      title: testName,
-      url: testUrl,
-    });
-    await setTestAuthor('');
-    await setTestName('');
-    await setTestUrl('');
+  const [testCategory, setTestCategory] = useState('az-dili');
+  const [testClass, setTestClass] = useState(9);
+  const [isGoogleForm, setIsGoogleForm] = useState(false);
+  useEffect(() => {
+    if (
+      testTitle &&
+      testUrl &&
+      testCategory &&
+      testClass &&
+      testUrl.includes('https://docs.google.com/forms/d/e/')
+    ) {
+      setError(false);
+    } else {
+      setError(true);
+    }
+  }, [testTitle, testUrl, testCategory, testClass]);
+  const handleAddTest = async () => {
+    const uniqeId = Math.random().toString(36).substr(2, 9);
+    if (!error) {
+      const docRef = doc(db, 'exams', uniqeId);
+      await setDoc(docRef, {
+        title: testTitle,
+        url: testUrl,
+        category: testCategory,
+        class: testClass,
+        id: uniqeId,
+        author: user.email.replace('@gmail.com', ''),
+      });
+      await setTestCategory('az-dili');
+      await setTestClass(9);
+      await setTestTitle('');
+      await setTestUrl('');
+    }
   };
-
   return (
     <div className="flex h-[calc(100vh-5rem)] items-center justify-center">
       {user ? (
         <div>
           {authAdmin() ? (
-            <form className="flex h-[38rem] w-[40rem] flex-col items-center gap-y-6 rounded border-2 p-10">
-              <h1 className="mb-4 text-3xl underline decoration-sky-500">
+            <div className="glassorism flex h-[38rem] w-[40rem] flex-col items-center gap-y-6 rounded border-2 p-10">
+              <h1 className="mb-4 text-3xl font-semibold underline decoration-sky-500">
                 Test əlvə edin
               </h1>
               <label className=" group  relative h-12  w-full">
@@ -70,11 +80,11 @@ const AddTest = () => {
                 </div>
                 <input
                   type="text"
-                  required
                   onChange={(e) => {
-                    setTestName(e.target.value);
+                    setTestTitle(e.target.value);
                   }}
-                  value={testName}
+                  value={testTitle}
+                  required
                   placeholder="Testın adını daxil edin"
                   className=" h-full w-full rounded border-2  border-gray-400 px-4 outline-none transition-all focus-within:border-sky-500 group-focus-within:placeholder:text-white"
                 />
@@ -88,8 +98,8 @@ const AddTest = () => {
                   onChange={(e) => {
                     setTestUrl(e.target.value);
                   }}
-                  value={testUrl}
                   required
+                  value={testUrl}
                   placeholder="Test Linkini Əlavə edin"
                   className=" h-full w-full rounded border-2  border-gray-400 px-4 outline-none transition-all focus-within:border-sky-500 group-focus-within:placeholder:text-white"
                 />
@@ -99,65 +109,53 @@ const AddTest = () => {
                 onChange={(e) => {
                   setTestClass(e.target.value);
                 }}
+                value={testClass}
                 className="h-12 w-full rounded  border-2  border-gray-400 p-2 outline-none focus-within:border-sky-500"
               >
-                <option value="" disabled>
-                  Lutfen bir sinif secin
+                <option value="9" selected>
+                  9 cu sinif
                 </option>
-
-                <option value="9">9 cu sinif</option>
                 <option value="8"> 8 ci sinif</option>
                 <option value="7"> 7 ci sinif</option>
                 <option value="6"> 6 cı sinif</option>
               </select>
               <select
                 required
-                onChange={(e) => {
-                  setTestAuthor(e.target.value);
-                }}
-                className="h-12 w-full rounded  border-2  border-gray-400 p-2 outline-none focus-within:border-sky-500"
-              >
-                <option value="" disabled>
-                  Lutfen bir muellif secin
-                </option>
-
-                <option value="Aytən">Aytən</option>
-                <option value="Gulcin"> Gulcin</option>
-                <option value="Aziz"> Aziz</option>
-                <option value="Bilmem kim"> Bilmem kim</option>
-              </select>
-              <select
-                required
+                value={testCategory}
                 onChange={(e) => {
                   setTestCategory(e.target.value);
                 }}
                 className="h-12 w-full rounded  border-2  border-gray-400 p-2 outline-none focus-within:border-sky-500"
               >
-                <option value="" disabled>
-                  Lutfen bir fenn secin
+                <option value="az-dili" selected>
+                  Azərbaycan dili
                 </option>
-                <option value="az-dili">Azərbaycan dili</option>
                 <option value="riyaziyyat">Riyaziyyat</option>
                 <option value="ingilis-dili"> İngilis dili</option>
                 <option value="tarix">Tarix</option>
               </select>
-              <button onClick={handleSetTest}>
-                <AwesomeButtonProgress
-                  type="primary"
-                  loadingLabel="Yüklənir"
-                  releaseDelay={400}
-                  size={'large'}
-                  action={(element, next) => {
-                    setTimeout(() => {
-                      next();
-                    }, 400);
-                  }}
-                  resultLabel="Tamalandi"
-                >
-                  Button
-                </AwesomeButtonProgress>
-              </button>
-            </form>
+              {error ? (
+                <div className="animate-pulse text-lg text-red-500">
+                  Lutfen tam doldurun
+                </div>
+              ) : null}
+              <AwesomeButtonProgress
+                type="primary"
+                disabled={('disabled', error ? true : false)}
+                loadingLabel="Yüklənir"
+                releaseDelay={700}
+                size={'large'}
+                action={(element, next) => {
+                  handleAddTest();
+                  setTimeout(() => {
+                    next();
+                  }, 700);
+                }}
+                resultLabel={'Elave edildi'}
+              >
+                Yüklə
+              </AwesomeButtonProgress>
+            </div>
           ) : null}
         </div>
       ) : (

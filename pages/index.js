@@ -10,9 +10,10 @@ import {
   AwesomeButtonProgress,
   AwesomeButtonSocial,
 } from 'react-awesome-button';
-import { useRouter } from 'next/router';
+import { Router, useRouter } from 'next/router';
 import Link from 'next/link';
 const Index = () => {
+  const rotuer = useRouter();
   // user girmesini denegler
   const [user, userLoading, userError] = useAuthState(auth);
   const educationAnimationOptions = {
@@ -24,7 +25,7 @@ const Index = () => {
     },
   };
   const authAdmin = () => {
-    if (user?.email === 'admin@gmail.com') {
+    if (user && user?.email === 'admin@gmail.com') {
       return true;
     } else {
       return false;
@@ -59,8 +60,15 @@ const Index = () => {
           />
         </p>
         {authAdmin() ? (
-          <AwesomeButton type="primary" size={'medium'} ripple={true}>
-            <Link href={'/admin'}>admin</Link>
+          <AwesomeButton
+            type="primary"
+            size={'medium'}
+            ripple={true}
+            action={() => {
+              rotuer.push('/admin');
+            }}
+          >
+            Admin
           </AwesomeButton>
         ) : (
           <AwesomeButton type="primary" size={'medium'} ripple={true}>
