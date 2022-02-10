@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { AwesomeButton } from 'react-awesome-button';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Loading from '../../components/Loading';
 import { auth } from '../../firebase/firebase';
@@ -32,11 +33,13 @@ const Index = () => {
         <div className="h-full w-full">
           {authAdmin() ? (
             <div className="h-full w-full  p-20">
-              <Link href={'/admin/addtest'}>
-                <a className="glassorism flex items-center justify-center w-[12rem] h-[4rem] transition-all  relative  ">
-                  Test Elave et
-                </a>
-              </Link>
+              <AwesomeButton
+                type="primary"
+                ripple={true}
+                href={'/admin/addtest'}
+              >
+                Yeni Test Əlavə Et
+              </AwesomeButton>
             </div>
           ) : null}
         </div>

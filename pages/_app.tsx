@@ -2,11 +2,10 @@ import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import { MainContextProvider } from '../helpers/MainContext';
 import Header from '../components/Header';
-import { Router, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Footer from '../components/Footer';
 import 'react-awesome-button/dist/themes/theme-blue.css';
-
 
 function MyApp({ Component, pageProps }: AppProps) {
   const rotuer = useRouter();

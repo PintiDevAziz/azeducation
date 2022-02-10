@@ -1,17 +1,11 @@
-import React, { useState } from 'react';
-import LoginButton from '../components/LoginButton';
+import React from 'react';
 import educationAnimationData from '../lottie/back-to-school.json';
 import Lottie from 'react-lottie';
 import Typewriter from 'typewriter-effect';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase/firebase';
-import {
-  AwesomeButton,
-  AwesomeButtonProgress,
-  AwesomeButtonSocial,
-} from 'react-awesome-button';
-import { Router, useRouter } from 'next/router';
-import Link from 'next/link';
+import { AwesomeButton } from 'react-awesome-button';
+import { useRouter } from 'next/router';
 const Index = () => {
   const rotuer = useRouter();
   // user girmesini denegler
@@ -34,12 +28,12 @@ const Index = () => {
   return (
     <div className="flex h-[calc(100vh-5rem)] px-20 ">
       <div className="flex h-full w-1/2  flex-col  justify-center">
-        <h1 className="glassorism mb-10  w-[75%] p-4 text-4xl font-semibold leading-[50px] tracking-wider text-black">
+        <h1 className="glassorism mb-10  w-[75%] p-4 text-3xl font-semibold leading-[50px] tracking-wider text-black">
           {user ? (
             <>
               {user?.displayName || user?.email.replace('@gmail.com', '')}{' '}
               <br />
-              Xos gelmisniz Artıq saytdan istifadə edə bilersiniz
+              Xoş gəlmisiniz Platformadan İstifadənin Keyfini çıxarın
             </>
           ) : (
             <>Dərslər ilə bağlı hər şey bir məkanda</>

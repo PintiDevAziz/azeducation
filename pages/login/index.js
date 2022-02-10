@@ -4,6 +4,8 @@ import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../firebase/firebase';
+import { AwesomeButton } from 'react-awesome-button';
+
 import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
@@ -91,24 +93,32 @@ const Index = () => {
         <div className={`${error ? 'block' : 'hidden'} text-red-500`}>
           {error && error.replace('/auth', '')}
         </div>
-        <button
-          onClick={login}
-          className="relative mt-6 h-12 w-1/2 rounded border-2 border-b-4 border-sky-500  tracking-wider transition-all  hover:border-sky-800 hover:bg-sky-500 hover:text-white"
+        <AwesomeButton
+          type="primary"
+          size={'medium'}
+          ripple={true}
+          action={() => {
+            login();
+          }}
         >
-          Daxil Ol
-        </button>
+          Giris Et
+        </AwesomeButton>
         <div className="relative mt-10 mb-10 h-[1px] w-full bg-gray-400">
-          <div className="absolute left-1/2 -top-3 flex w-10 -translate-x-1/2 items-center justify-center rounded border bg-white">
-            Or
+          <div className="absolute left-1/2 -top-3 flex w-16 -translate-x-1/2 items-center justify-center rounded border border-sky-400 bg-white text-gray-700">
+            Və Ya
           </div>
         </div>
-        <button
-          onClick={loginWithGoogle}
-          className="flex h-10 w-full items-center justify-center rounded  border-2 border-gray-400 px-4 text-gray-500 hover:border-sky-500 hover:text-black"
+        <AwesomeButton
+          type="secondary"
+          size={'lg'}
+          ripple={true}
+          action={() => {
+            loginWithGoogle();
+          }}
         >
           <FcGoogle className="mr-2" />
           <span>Google ilə daxil ol</span>
-        </button>
+        </AwesomeButton>
         <Link href={'/login/signup'}>
           <a className="mt-auto text-gray-500 hover:text-sky-500 hover:underline">
             Hələ də Hesabın yoxdur ?
