@@ -1,17 +1,11 @@
-import React from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { useTimer } from 'reactjs-countdown-hook';
-import { BsGear } from 'react-icons/bs';
-import {
-  AiOutlinePlayCircle,
-  AiOutlinePauseCircle,
-  AiOutlineFieldTime,
-} from 'react-icons/ai';
+import { AiOutlinePlayCircle, AiOutlinePauseCircle } from 'react-icons/ai';
 import { AwesomeButton } from 'react-awesome-button';
 import Head from 'next/head';
+import LoadingScreen from '../components/LoadingScreen';
 const PomodoroTimer = () => {
   const [mode, setMode] = useState('work');
   async function handleTimerFinish() {
@@ -20,27 +14,29 @@ const PomodoroTimer = () => {
   const [workTime, setWorkTime] = useState(1500);
   const [restTime, setRestTime] = useState(300);
   const [modal, setModal] = useState(false);
+  const [barColor, setBarColor] = useState('sky');
   const choseTime = mode == 'work' ? workTime : restTime;
-  const {
-    isActive,
-    counter,
-    seconds,
-    minutes,
-    hours,
-    days,
-    pause,
-    resume,
-    reset,
-  } = useTimer(choseTime, handleTimerFinish);
+  const { isActive, counter, seconds, pause, resume, reset } = useTimer(
+    choseTime,
+    handleTimerFinish
+  );
   const mainPercentage =
     mode === 'work' ? (counter / workTime) * 100 : (counter / restTime) * 100;
   useEffect(() => {
     reset();
     pause();
   }, [mode]);
+  useEffect(() => {
+    if (counter / 60 <= 5) {
+      setBarColor('red');
+    } else {
+      setBarColor('#0EA5E9');
+    }
+  }, [counter]);
 
   return (
-    <div className="flex h-[calc(100vh-5rem)] w-full  items-center justify-center p-10 ">
+    <div className="flex  h-[calc(100vh-5rem)] w-full  items-center justify-center p-10 ">
+      <LoadingScreen />
       <Head>
         <title>
           {Math.floor(counter / 60)}:{seconds}
@@ -51,9 +47,11 @@ const PomodoroTimer = () => {
           type="secondary"
           size={'medium'}
           ripple={true}
-          action={() => {
+          action={(elem) => {
             if (mode === 'rest') {
               setMode('work');
+            } else {
+              setMode('rest');
             }
           }}
         >
@@ -98,6 +96,7 @@ const PomodoroTimer = () => {
             <input
               type={'text'}
               value={workTime / 60}
+              onChange={() => {}}
               className="pointer-events-none flex h-12 w-12 appearance-none items-center justify-center rounded border border-gray-400 text-center font-semibold outline-none"
             />
             <AwesomeButton
@@ -117,7 +116,7 @@ const PomodoroTimer = () => {
           </label>
         </div>
         <div className="mt-10 ">
-          <h1 className="mb-4 text-xl ">İş üçün olan müddət</h1>
+          <h1 className="mb-4 text-xl ">Fasilə üçün olan müddət</h1>
           <label className=" flex w-full items-center justify-center gap-x-12 ">
             <AwesomeButton
               type="primary"
@@ -179,7 +178,7 @@ const PomodoroTimer = () => {
 
               pathTransitionDuration: 0.5,
 
-              pathColor: `#0ea5e9`,
+              pathColor: `${barColor}`,
               textColor: '#666',
               trailColor: '#d6d6d6',
               backgroundColor: '#3e98c7',

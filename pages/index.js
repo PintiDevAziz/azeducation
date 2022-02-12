@@ -6,6 +6,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase/firebase';
 import { AwesomeButton } from 'react-awesome-button';
 import { useRouter } from 'next/router';
+import LoadingScreen from '../components/LoadingScreen';
 const Index = () => {
   const rotuer = useRouter();
   // user girmesini denegler
@@ -27,6 +28,7 @@ const Index = () => {
   };
   return (
     <div className="flex h-[calc(100vh-5rem)] px-20 ">
+      <LoadingScreen />
       <div className="flex h-full w-1/2  flex-col  justify-center">
         <h1 className="glassorism mb-10  w-[75%] p-4 text-3xl font-semibold leading-[50px] tracking-wider text-black">
           {user ? (

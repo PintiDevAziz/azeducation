@@ -3,6 +3,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { db } from '../../firebase/firebase';
 import Loading from '../../components/Loading';
+import LoadingScreen from '../../components/LoadingScreen';
 const Exams = () => {
   const [exams, setExams] = useState([]);
   const colRef = collection(db, '/exams');
@@ -31,7 +32,9 @@ const Exams = () => {
     },
   ];
   return (
-    <div className="flex h-[calc(100vh-5rem)] items-center justify-center items-center">
+    <div className="flex h-[calc(100vh-5rem)]  items-center justify-center">
+      <LoadingScreen />
+
       {exams.length ? (
         <div className="flex h-[calc(100vh-5rem)]  flex-wrap justify-around p-10 ">
           {categories.map((category, key) => (

@@ -7,6 +7,8 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase/firebase';
 import Link from 'next/link';
 import Loading from '../components/Loading';
+import { AwesomeButton } from 'react-awesome-button';
+import LoadingScreen from '../components/LoadingScreen';
 const VideoLessons = ({ data }) => {
   //user
   const [user, userLoading, userError] = useAuthState(auth);
@@ -34,8 +36,10 @@ const VideoLessons = ({ data }) => {
       preserveAspectRatio: 'xMidYMid slice',
     },
   };
+  console.log(items);
   return (
     <div className="flex h-[calc(100vh-5rem)] w-full flex-col px-20">
+      <LoadingScreen />
       <div
         className={` absolute inset-0 z-[100000] h-full w-full items-center justify-center   bg-black/80 ${
           !user ? 'flex' : 'hidden'
@@ -52,26 +56,34 @@ const VideoLessons = ({ data }) => {
         <input
           type="text"
           onChange={(e) => setInput(e.target.value)}
-          className=" h-14 flex-1 rounded  border-2 px-2 outline-none transition-all focus-within:border-indigo-500"
+          className=" h-12 flex-1 rounded  border-2 px-2 outline-none transition-all focus-within:border-indigo-500"
           placeholder="Dərslər arasında axtarış"
         />
-        <button
-          onClick={() => {
-            if (input) {
-              setSearchQuery(input);
-            }
-          }}
-          className=" mx-4 h-14 w-32 rounded border-2 border-gray-500 hover:border-indigo-500"
-        >
-          Search
-        </button>
+        <div className="ml-4">
+          <AwesomeButton
+            type="primary"
+            size={'large'}
+            ripple={true}
+            action={() => {
+              if (input) {
+                setSearchQuery(input);
+              }
+            }}
+          >
+            Axtar
+          </AwesomeButton>
+        </div>
       </div>
       {items && items.length ? (
         <div className="flex  flex-wrap gap-7">
           {items?.length ? (
             <>
               {items?.map((video, key) => (
-                <VideoBox video={video} key={key} />
+                <>
+                  {video.etag !== 'oVbvL0aVWTTcFUznHKKHXJdscfM' ? (
+                    <VideoBox video={video} key={key} />
+                  ) : null}
+                </>
               ))}
             </>
           ) : (
@@ -92,7 +104,7 @@ const VideoLessons = ({ data }) => {
           )}
         </div>
       ) : (
-        <div className='mx-auto mt-10'>
+        <div className="mx-auto mt-10">
           <Loading />
         </div>
       )}
