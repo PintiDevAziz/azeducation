@@ -2,14 +2,10 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { BiUser } from 'react-icons/bi';
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 import { auth } from '../../firebase/firebase';
-import {
-  createUserWithEmailAndPassword,
-  reauthenticateWithRedirect,
-} from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { AwesomeButton } from 'react-awesome-button';
-import { sendEmailVerification } from 'firebase/auth';
 const Index = () => {
   //! Router
   const router = useRouter();
@@ -115,7 +111,12 @@ const Index = () => {
           size={'lg'}
           disabled={
             ('disabled',
-            error || email.length === 0 || password.length === 0 || vpassword.length === 0 ? true : false)
+            error ||
+            email.length === 0 ||
+            password.length === 0 ||
+            vpassword.length === 0
+              ? true
+              : false)
           }
           action={() => {
             register();

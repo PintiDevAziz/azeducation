@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Footer from '../components/Footer';
 import 'react-awesome-button/dist/themes/theme-blue.css';
+import Head from 'next/head';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const rotuer = useRouter();
@@ -21,6 +22,22 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [rotuer]);
   return (
     <MainContextProvider>
+      <Head>
+        <title>Az Education</title>
+        <meta name="title" content="Az Education" />
+        <meta
+          name="description"
+          content="Telebelrin tehsil ile bagli bir yere toplanmasi ucun olan ve pintiDevAziz terefinden kodlanan platform"
+        />
+        <meta
+          name="keywords"
+          content="Az Edcaution, Online Tehsil , Online Sinaqlar, Pomdoor timer , Kitabxana,  online vide ders izahlari"
+        />
+        <meta name="robots" content="index, follow" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="language" content="English" />
+        <meta property="og:url" content="https://az-education.vercel.app/" />
+      </Head>
       {showHeader ? <Header /> : null}
       <Component {...pageProps} />
       <Footer />

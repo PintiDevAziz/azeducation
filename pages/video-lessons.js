@@ -8,7 +8,6 @@ import { auth } from '../firebase/firebase';
 import Link from 'next/link';
 import Loading from '../components/Loading';
 import { AwesomeButton } from 'react-awesome-button';
-import LoadingScreen from '../components/LoadingScreen';
 const VideoLessons = ({ data }) => {
   //user
   const [user, userLoading, userError] = useAuthState(auth);
@@ -36,10 +35,9 @@ const VideoLessons = ({ data }) => {
       preserveAspectRatio: 'xMidYMid slice',
     },
   };
-  console.log(items);
   return (
     <div className="flex h-[calc(100vh-5rem)] w-full flex-col px-20">
-      <LoadingScreen />
+
       <div
         className={` absolute inset-0 z-[100000] h-full w-full items-center justify-center   bg-black/80 ${
           !user ? 'flex' : 'hidden'

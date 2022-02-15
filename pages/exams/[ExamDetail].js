@@ -1,12 +1,11 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { onSnapshot, collection, Timestamp } from 'firebase/firestore';
+import { onSnapshot, collection } from 'firebase/firestore';
 import { db } from '../../firebase/firebase';
 import Link from 'next/link';
-const ExamDetail = () => {
+const ExamDetailPage = () => {
   const router = useRouter();
 
-  const timeStamp = new Timestamp();
   const { ExamDetail } = router.query;
   const [examsArray, setExamsArray] = useState([]);
   const colRef = collection(db, 'exams');
@@ -33,7 +32,9 @@ const ExamDetail = () => {
                 <div className="h-8 w-[calc(100%-15rem)]  overflow-hidden  text-xl font-semibold  transition-all group-hover:h-auto group-hover:text-sky-500">
                   {item.title}
                 </div>
-                <div className="absolute bottom-3 italic font-semibold right-3">{item.author}</div>
+                <div className="absolute bottom-3 right-3 font-semibold italic">
+                  {item.author}
+                </div>
               </a>
             </Link>
           ))}
@@ -42,4 +43,4 @@ const ExamDetail = () => {
   );
 };
 
-export default ExamDetail;
+export default ExamDetailPage;

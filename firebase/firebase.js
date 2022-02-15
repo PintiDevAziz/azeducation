@@ -2,7 +2,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 const firebaseConfig = {
-  apiKey: 'AIzaSyDL7GQlOZXcL9QpMfKeaGqyETVyztjjHdk',
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: 'tehsil-mekani.firebaseapp.com',
   projectId: 'tehsil-mekani',
   storageBucket: 'tehsil-mekani.appspot.com',

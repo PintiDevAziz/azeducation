@@ -1,8 +1,5 @@
-import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import React, { useEffect } from 'react';
 import { AwesomeButton } from 'react-awesome-button';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Loading from '../../components/Loading';
@@ -21,7 +18,7 @@ const Index = () => {
     }
   };
   useEffect(() => {
-    if (user) {
+    if (user || !user) {
       if (!authAdmin()) {
         router.push('/');
       }

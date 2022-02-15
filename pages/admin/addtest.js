@@ -1,13 +1,9 @@
-import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import React from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Loading from '../../components/Loading';
-import { auth } from '../../firebase/firebase';
+import { auth, db } from '../../firebase/firebase';
 import { AwesomeButtonProgress } from 'react-awesome-button';
-import { db } from '../../firebase/firebase';
 import { setDoc, doc } from 'firebase/firestore';
 const AddTest = () => {
   const [user, userLoadin, userError] = useAuthState(auth);
@@ -33,7 +29,6 @@ const AddTest = () => {
   const [testUrl, setTestUrl] = useState('');
   const [testCategory, setTestCategory] = useState('az-dili');
   const [testClass, setTestClass] = useState(9);
-  const [isGoogleForm, setIsGoogleForm] = useState(false);
   useEffect(() => {
     if (
       testTitle &&

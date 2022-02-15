@@ -1,7 +1,6 @@
 import React from 'react';
 import errorPage from '../lottie/404-page.json';
 import Lottie from 'react-lottie';
-import LoadingScreen from '../components/LoadingScreen';
 const ErrorPage = () => {
   const errorAnimationOptions = {
     loop: true,
@@ -13,7 +12,6 @@ const ErrorPage = () => {
   };
   return (
     <div className="flex h-[calc(100vh-5rem)] items-center justify-center">
-      <LoadingScreen />
       <div className="h-full w-full">
         <Lottie options={errorAnimationOptions} isClickToPauseDisabled={true} />
       </div>

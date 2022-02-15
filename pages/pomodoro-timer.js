@@ -5,7 +5,6 @@ import { useTimer } from 'reactjs-countdown-hook';
 import { AiOutlinePlayCircle, AiOutlinePauseCircle } from 'react-icons/ai';
 import { AwesomeButton } from 'react-awesome-button';
 import Head from 'next/head';
-import LoadingScreen from '../components/LoadingScreen';
 const PomodoroTimer = () => {
   const [mode, setMode] = useState('work');
   async function handleTimerFinish() {
@@ -36,7 +35,6 @@ const PomodoroTimer = () => {
 
   return (
     <div className="flex  h-[calc(100vh-5rem)] w-full  items-center justify-center p-10 ">
-      <LoadingScreen />
       <Head>
         <title>
           {Math.floor(counter / 60)}:{seconds}
