@@ -41,7 +41,7 @@ const Index = () => {
             <>Dərslər ilə bağlı hər şey bir məkanda</>
           )}
         </h1>
-        <p className="glassorism mb-6 w-[75%] p-4 text-[17px] text-gray-500">
+        <p className="glassorism mb-6 w-[75%] p-4 text-[17px] text-gray-600 ">
           <Typewriter
             options={{
               strings: [

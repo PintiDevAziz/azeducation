@@ -37,19 +37,6 @@ const VideoLessons = ({ data }) => {
   };
   return (
     <div className="flex h-[calc(100vh-5rem)] w-full flex-col px-20">
-
-      <div
-        className={` absolute inset-0 z-[100000] h-full w-full items-center justify-center   bg-black/80 ${
-          !user ? 'flex' : 'hidden'
-        }`}
-      >
-        <Link href={'/login'}>
-          <a className="text-4xl font-semibold text-sky-500 hover:underline">
-            {' '}
-            Evvelce giris et ve ya hesab yarat
-          </a>
-        </Link>
-      </div>
       <div className="glassorism my-6 flex h-20 items-center border-b-4 px-6 py-1">
         <input
           type="text"
@@ -112,7 +99,7 @@ const VideoLessons = ({ data }) => {
 export async function getServerSideProps(ctx) {
   const { query } = ctx;
   const res = await fetch(
-    `https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=UCpERt5A7SNd7s5XNAj2mGmw&maxResults=10&order=date&q=${query.search}&key=AIzaSyAPIEZkm-yQzTUdkN91mYefL2r2ZzTXpWM`
+    `https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=UCpERt5A7SNd7s5XNAj2mGmw&maxResults=10&order=date&q=${query.search}&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}`
   );
   const data = await res.json();
   return {

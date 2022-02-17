@@ -19,7 +19,7 @@ const LoadingScreen = () => {
   return (
     <div
       className={`absolute inset-0 z-[1000000] flex h-full w-full -translate-y-full items-center justify-center bg-white   transition-all ${
-        loading ? 'translate-y-0' : '-translate-y-full'
+        loading ? 'translate-y-0' : '-translate-y-[100rem]'
       }`}
     >
       <div className="h-[50rem] w-[50rem]">

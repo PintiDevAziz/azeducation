@@ -27,7 +27,7 @@ const PomodoroTimer = () => {
   }, [mode]);
   useEffect(() => {
     if (counter / 60 <= 5) {
-      setBarColor('red');
+      setBarColor('#FF7900');
     } else {
       setBarColor('#0EA5E9');
     }
@@ -94,7 +94,6 @@ const PomodoroTimer = () => {
             <input
               type={'text'}
               value={workTime / 60}
-              onChange={() => {}}
               className="pointer-events-none flex h-12 w-12 appearance-none items-center justify-center rounded border border-gray-400 text-center font-semibold outline-none"
             />
             <AwesomeButton
